@@ -3,8 +3,10 @@ import CustomErrorHandler from "../../services/CustomErrorHandler.js";
 
 const meController = async (req, res, next) => {
   try {
-    const user = await UserModel.findOne({ _id: req.user._id });
-   //  console.log(user);
+    const user = await UserModel.findOne({ _id: req.user._id }).select(
+      "-password -updatedAt -__v"
+    );
+    //  console.log(user);
     if (!user) {
       return next(CustomErrorHandler.notFound());
     }
